@@ -17,7 +17,6 @@ import (
 	"fmt"
 
 	"github.com/Harlow-CS/zomboidBot/bot"
-	"github.com/Harlow-CS/zomboidBot/zomboid"
 	"go.uber.org/zap"
 )
 
@@ -28,9 +27,6 @@ func main() {
 	logger, _ := zap.NewProduction()
 	defer logger.Sync() // flushes buffer, if any
 	// sugar := logger.Sugar()
-
-	// intialize server settings
-	factorio.SetServerSettings()
 
 	// start the bot
 	bot.Start()

@@ -1,0 +1,18 @@
+[Unit]
+Description=Zomboid Discord Bot
+After=network.target
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=pzuser
+WorkingDirectory=/opt/pzserver
+EnvironmentFile=/opt/pzserver/zomboidBot/.env
+ExecStart=/opt/pzserver/zomboidBot/bin/zomboidBot
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=pzuser
+
+[Install]
+WantedBy=multi-user.target
