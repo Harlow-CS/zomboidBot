@@ -1,0 +1,13 @@
+[Unit]
+Description=Project Zomboid Server
+After=network.target
+
+[Service]
+PrivateTmp=true
+Type=simple
+User=pzuser
+WorkingDirectory=/opt/pzserver/
+ExecStart=/opt/pzserver/start-server.sh
+
+[Install]
+WantedBy=multi-user.target

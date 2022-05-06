@@ -196,7 +196,7 @@ SandboxVars = {
     -- 5 = Often
     LockedHouses = 6,
     -- Spawn with chips, water bottle, school bag, baseball bat and a hammer.
-    StarterKit = false,
+    StarterKit = true,
     -- Nutritional value of food affects the player's condition.
     Nutrition = true,
     -- Define how fast the food will spoil inside or outside fridge.

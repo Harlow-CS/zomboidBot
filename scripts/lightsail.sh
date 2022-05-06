@@ -26,7 +26,7 @@ sudo mkdir /opt/pzserver &&\
   sudo chown pzuser:pzuser /opt/pzserver
 
 # Copy steam install script
-# sudo cp ./fixtures/update_zomboid.txt /opt/pzserver/update_zomboid.txt
+# sudo cp ../fixtures/update_zomboid.txt /opt/pzserver/update_zomboid.txt
 
 # Install project zomboid server
 sudo steamcmd +runscript ./fixtures/update_zomboid.txt

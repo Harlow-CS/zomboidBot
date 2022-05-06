@@ -10,4 +10,5 @@ require (
 	go.uber.org/zap v1.21.0 // indirect
 	golang.org/x/crypto v0.0.0-20210421170649-83a5a9bb288b // indirect
 	golang.org/x/sys v0.0.0-20210510120138-977fb7262007 // indirect
+	gopkg.in/ini.v1 v1.66.4 // indirect
 )

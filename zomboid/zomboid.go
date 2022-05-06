@@ -9,6 +9,8 @@ import (
 	"io/ioutil"
 	"time"
 	"strings"
+
+	"gopkg.in/ini.v1"
 )
 
 // global var of tracking currently running server process
@@ -19,48 +21,37 @@ var (
 var (
 
 	installationPath = os.Getenv("zomboid_cli_path")
+	serverConfigFilesPath = os.Getenv("server_config_files_path")
 
 )
 
-func PingServer(saveFile string) {
-	log.Println("Starting server...")
-
-	var saveFilePath = filepath.Join(savesPath, saveFile + ".zip")
-
-	cmd := exec.Command(serverPath, "--start-server", saveFilePath, "--server-settings", settingsPath, "--bind", "0.0.0.0")
-	if err := cmd.Start(); err != nil {
+/*
+	* Gets whether the server is active or not
+*/
+func IsServerActive() bool {
+	cmd := exec.Command("systemctl", "is-active", "zomboid")
+	if err := cmd.Run(); err != nil {
 		log.Printf("Failed to start server:\n%s", err)
 	}
 
-	// capture the server process
-	Server = cmd.Process
-
-	// poll and wait for the server log to say it's ready for hosting
-	// if it takes > 5 minutes, exit and say it's bad
-	var ready = false
-	var totalSleep = 0
-	for (!ready || totalSleep >= 300) {
-		b, err := ioutil.ReadFile(serverCurrentLogPath) 
-		if err != nil {
-			log.Print(err)
-		}
-		serverLogs := string(b)
-
-		if (strings.Contains(serverLogs, "Matching server game")) {
-			ready = true
-		} else {
-			time.Sleep(10 * time.Second)
-			totalSleep = totalSleep + 10
-		}
-
-	}
-
-	if(ready) {
-		log.Println("Server started")
+	output := strings.TrimSpace(string(cmd))
+	if (output == "active") {
+		return true
 	} else {
-		log.Println("Server failed to start")
-		Server.Kill()
-		Server = nil
+		return false
 	}
+}
+
+/*
+	* Captures the server process
+*/
+func GetServerProcess() {
+	cmd := exec.Command("systemctl", "show", "--property", "MainPID", "zomboid")
+	if err := cmd.Run(); err != nil {
+		log.Printf("Failed to start server:\n%s", err)
+	}
+
+	pid := strings.TrimSpace(string(cmd))
+	Server = os.FindProcess(pid)
 
 }
