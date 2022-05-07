@@ -71,15 +71,10 @@ func GetSandboxConfig(serverName string) string {
 
 	// defer the closing of our jsonFile so that we can parse it later on
 	defer jsonFile.Close()
-
 	byteValue, _ := ioutil.ReadAll(jsonFile)
-
 	jsonString := string(byteValue)
-
 	fileString += jsonString
-
 	return fileString
-
 }
 
 /*

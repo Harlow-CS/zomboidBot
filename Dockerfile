@@ -27,8 +27,9 @@ RUN echo steam steam/question select "I AGREE" | debconf-set-selections \
 ARG DEBIAN_FRONTEND=noninteractive
 RUN dpkg --add-architecture i386 \
   && apt-get update -y \
-  && apt-get install -y --no-install-recommends ca-certificates locales steamcmd expect \
-  && rm -rf /var/lib/apt/lists/*
+  && apt-get install -y --no-install-recommends ca-certificates \
+  locales steamcmd expect build-essential golang git &&\
+  rm -rf /var/lib/apt/lists/*
 
 # Add unicode support
 RUN locale-gen en_US.UTF-8
@@ -53,11 +54,18 @@ COPY . /zomboidBot
 # Install project zomboid server
 RUN steamcmd +runscript /opt/pzserver/update_zomboid.txt
 
+# Copy zomboidBot service into systemd
+RUN cp /zomboidBot/fixtures/systemd/zomboidBot.service /etc/systemd/system/zomboidBot.service
+
+# Build ZomBot
+WORKDIR /zomboidBot
+RUN make build
+
 # Swap to pzuser
 USER pzuser
 
 # First time server run
 RUN source /zomboidBot/.env.dev && /zomboidBot/fixtures/scripts/first-time-server-start.sh $server_admin_password
 
-# Start server
-ENTRYPOINT /opt/pzserver/start-server.sh
+# Start Discord Bot
+ENTRYPOINT source /zomboidBot/.env.dev && /zomboidBot/bin/zomboidBot

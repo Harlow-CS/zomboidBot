@@ -105,7 +105,7 @@ var (
 			acknowledge(s, i, fmt.Sprintf("Processing settings request operation: '%s'", operation))
 
 			if (operation == "ls") {
-				config := zomboid.GetServerConfig("server-name")
+				config := zomboid.GetServerConfig(serverName)
 
 				// create tmp dir if it doesn't exist
 				os.MkdirAll("./tmp", os.ModePerm)
@@ -140,7 +140,7 @@ var (
 					return
 				}
 
-				zomboid.UpdateServerConfig("server-name", newSettings)
+				zomboid.UpdateServerConfig(serverName, newSettings)
 
 				s.ChannelMessageSend(ChannelID, "Saved new server config")
 			} else {
@@ -151,7 +151,7 @@ var (
 
 			acknowledge(s, i, "Processing sandbox config list...")
 
-			config := zomboid.GetSandboxConfig("server-name")
+			config := zomboid.GetSandboxConfig(serverName)
 
 			// create tmp dir if it doesn't exist
 			os.MkdirAll("./tmp", os.ModePerm)

@@ -1,4 +1,4 @@
-# factorioBot
+# zomboidBot
 Discord Bot for managing a Project Zomboid dedicated server
 
 ## Running locally
