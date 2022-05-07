@@ -70,9 +70,9 @@ var (
 			if (operation == "ping") {
 
 				if (zomboid.IsServerActive()) {
-					s.ChannelMessageSend(ChannelID, "Server is offline")
-				} else {
 					s.ChannelMessageSend(ChannelID, "Server is running")
+				} else {
+					s.ChannelMessageSend(ChannelID, "Server is offline")
 				}
 
 			} else if (operation == "start") {

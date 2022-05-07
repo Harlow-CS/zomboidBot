@@ -68,4 +68,4 @@ USER pzuser
 RUN source /zomboidBot/.env.dev && /zomboidBot/fixtures/scripts/first-time-server-start.sh $server_admin_password
 
 # Start Discord Bot
-ENTRYPOINT source /zomboidBot/.env.dev && /zomboidBot/bin/zomboidBot
+ENTRYPOINT /zomboidBot/fixtures/scripts/entrypoint.sh
