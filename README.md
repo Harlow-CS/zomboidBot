@@ -18,14 +18,14 @@ whitelisted_read_settings="PVP,PublicName,SafetySystem,SpawnPoint,SpawnItems,Pas
 whitelisted_write_settings="PVP,SafetySystem,SpawnPoint,SpawnItems,PingLimit"
 ```
 
-### Running the server with Docker
+### Running the Bot + Server with Docker
 Run the following commands:
 ```
 make docker-build
 docker run -p 16261:16261/udp -p 8766:8766/tcp -p 16262-16266:16262-16266/tcp zomboid-bot-image
 ```
 
-The server should now be set up like the real thing. It won't be accessible to the internet unless you manually set up port forwarding on your router.
+The bot should now be set up like the real thing. The server itself won't be accessible to the internet unless you manually set up port forwarding on your router.
 
 ## Running Discord Bot locally
 Run the following commands:
@@ -34,7 +34,7 @@ make build
 ./bin/zomboidBot
 ```
 
-You should now have the bot running. Note that since it isn't running in the docker container this way, it won't be able to access the zomboid server.
+You should now have the bot running. Note that since it isn't running in the docker container this way, it won't be able to access the zomboid server within the docker container.
 
 ## Deploying
 
