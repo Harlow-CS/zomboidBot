@@ -1,16 +1,10 @@
 package zomboid
 
 import (
+	"path/filepath"
 	"log"
 	"os"
 	"os/exec"
-	//"path/filepath"
-	//"encoding/json"
-	//"io/ioutil"
-	//"time"
-	// "strings"
-	"strconv"
-
 )
 
 // global var of tracking currently running server process
@@ -28,50 +22,28 @@ var (
 	* Gets whether the server is active or not
 */
 func IsServerActive() bool {
-	output, err := exec.Command("systemctl", "is-active", "zomboid").Output()
-	if err != nil {
-		log.Printf("Failed to see if zomboid is active:\n%s", err)
-	}
-
-	if (string(output) == "active") {
-		return true
-	} else {
+	if (Server == nil) {
 		return false
+	} else {
+		return true
 	}
-}
-
-/*
-	* Captures the server process
-*/
-func GetServerProcess() {
-	output, err := exec.Command("systemctl", "show", "--property", "MainPID", "zomboid").Output()
-	if err != nil {
-		log.Printf("Failed to get main PID of zomboid:\n%s", err)
-	}
-
-	pid, _ := strconv.Atoi(string(output))
-	Server, _ = os.FindProcess(pid)
-
 }
 
 /*
 	* Captures the server process
 */
 func StartServer() {
-	cmd := exec.Command("systemctl", "start", "zomboid")
+	serverExecPath := filepath.Join(installationPath, "start-server.sh")
+	cmd := exec.Command(serverExecPath)
 	if err := cmd.Start(); err != nil {
 		log.Printf("Failed to start server:\n%s", err)
 	}
-
 }
 
 /*
-	* Captures the server process
+	* Kills the server
 */
-func RestartServer() {
-	cmd := exec.Command("systemctl", "restart", "zomboid")
-	if err := cmd.Start(); err != nil {
-		log.Printf("Failed to restart server:\n%s", err)
-	}
-
+func StopServer() {
+	Server.Kill()
+	Server = nil
 }

@@ -45,7 +45,7 @@ RUN mkdir /opt/pzserver &&\
   chown pzuser:pzuser /opt/pzserver
 
 # Copy steam install script
-COPY ./fixtures/update_zomboid.txt /opt/pzserver/update_zomboid.txt
+COPY ./fixtures/steam/update_zomboid.txt /opt/pzserver/update_zomboid.txt
 
 # Install project zomboid server
 RUN steamcmd +runscript /opt/pzserver/update_zomboid.txt

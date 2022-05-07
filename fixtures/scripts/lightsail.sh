@@ -29,5 +29,12 @@ sudo mkdir /opt/pzserver &&\
 # sudo cp ../fixtures/update_zomboid.txt /opt/pzserver/update_zomboid.txt
 
 # Install project zomboid server
-sudo steamcmd +runscript ./fixtures/update_zomboid.txt
+sudo steamcmd +runscript ../fixtures/update_zomboid.txt
 
+# Create systemd service
+sudo cp ../fixtures/systemd/zomboidBot.service /etc/systemd/system/zomboidBot.service
+sudo systemctl daemon-reload
+
+# run the zomboid server
+sudo su - pzuser
+/opt/server/start-server.sh

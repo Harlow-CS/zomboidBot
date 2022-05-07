@@ -1,11 +1,11 @@
 package zomboid
 
 import (
+	"log"
 	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
-	//"encoding/json"
 	"io/ioutil"
 
 	"gopkg.in/ini.v1"
@@ -15,6 +15,7 @@ var (
 
 	serverConfigFilesPath = os.Getenv("server_config_files_path")
 	whitelistedReadSettings = os.Getenv("whitelisted_read_settings")
+	whitelistedWriteSettings = os.Getenv("whitelisted_write_settings")
 
 )
 
@@ -22,7 +23,7 @@ var (
 	* Gets current config, returns it as a string
 	* Only returns whitelisted key values
 */
-func GetCurrentConfig(serverName string) string {
+func GetServerConfig(serverName string) string {
 
 	// Read in current server config
 	configFilePath := filepath.Join(serverConfigFilesPath, serverName + ".ini")
@@ -47,7 +48,17 @@ func GetCurrentConfig(serverName string) string {
 		}
 	}
 
-	fileString += "===== Sandbox Settings =====\n"
+	return fileString
+
+}
+
+/*
+	* Gets current config, returns it as a string
+	* Only returns whitelisted key values
+*/
+func GetSandboxConfig(serverName string) string {
+
+	fileString := "===== Sandbox Settings =====\n"
 
 	// get the Sandbox Settings as well, they're interesting and fully configurable
 	// Open sandbox json file
@@ -55,7 +66,7 @@ func GetCurrentConfig(serverName string) string {
 	jsonFile, err := os.Open(sandboxFilePath)
 	// if we os.Open returns an error then handle it
 	if err != nil {
-			fmt.Println(err)
+		log.Println(err)
 	}
 
 	// defer the closing of our jsonFile so that we can parse it later on
@@ -65,7 +76,6 @@ func GetCurrentConfig(serverName string) string {
 
 	jsonString := string(byteValue)
 
-	fmt.Println(jsonString)
 	fileString += jsonString
 
 	return fileString
@@ -75,17 +85,28 @@ func GetCurrentConfig(serverName string) string {
 /*
 	* Updates server-name.ini settings
 */
-/*
-func UpdateConfig(serverName string, newConfig map[string]interface{}) {
+func UpdateServerConfig(serverName string, newConfig string) {
 
 	// Read in current server config
 	configFilePath := filepath.Join(serverConfigFilesPath, serverName + ".ini")
 	currentConfig, _ := ini.Load(configFilePath)
 
-	// set pvp
-	if option, ok := newConfig["PVP"]; ok {
-		currentConfig.Section("").Key("PVP").SetValue(option.StringValue())
+	// split key/value pairs
+	parameters := strings.Split(newConfig, ",")
+	for i := 0; i < len(parameters); i++ {
+		parameter := parameters[i]
+		splitValue := strings.Split(parameter, "=")
+
+		key := splitValue[0]
+		value := splitValue[1]
+
+		// ensure this key is in the write whitelist
+		if (strings.Contains(whitelistedWriteSettings, key)) {
+			currentConfig.Section("").Key(key).SetValue(value)
+		}
+
+		currentConfig.SaveTo(configFilePath)
+
 	}
 
 }
-*/

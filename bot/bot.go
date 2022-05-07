@@ -6,10 +6,8 @@ import (
 	"os"
 	"os/signal"
 	"regexp"
-	//"strings"
 
 	"github.com/bwmarrin/discordgo"
-	//"github.com/Harlow-CS/zomboidBot/zomboid"
 )
 
 // Bot parameters
