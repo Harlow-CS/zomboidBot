@@ -31,12 +31,12 @@ sudo mkdir /opt/pzserver &&\
 sudo steamcmd +runscript /zomboidBot/fixtures/steam/update_zomboid.txt
 
 # Create systemd service
-cp /home/pzuser/zomboidBot/fixtures/systemd/zomboidBot.service /etc/systemd/system/zomboidBot.service
+sudo cp /home/pzuser/zomboidBot/fixtures/systemd/zomboidBot.service /etc/systemd/system/zomboidBot.service
 sudo systemctl daemon-reload
 
 # Build the bot
 cd /home/pzuser/zomboidBot
-make build
+sudo make build
 cd /
 
 # Run the zomboid server for the first time
