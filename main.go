@@ -22,11 +22,10 @@ import (
 
 func main() {
 
-	fmt.Println("Hello, World!")
+	fmt.Println("Initializing bot...")
 
 	logger, _ := zap.NewProduction()
-	defer logger.Sync() // flushes buffer, if any
-	// sugar := logger.Sugar()
+	defer logger.Sync()
 
 	// start the bot
 	bot.Start()

@@ -10,12 +10,7 @@ import (
 // global var of tracking currently running server process
 var (
 	Server *os.Process = nil
-)
-
-var (
-
 	installationPath = os.Getenv("zomboid_cli_path")
-
 )
 
 /*

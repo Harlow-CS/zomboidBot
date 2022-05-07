@@ -1,8 +1,10 @@
 FROM ubuntu:latest
 
+# Ports necessary for the server
 EXPOSE 8766:8766/udp
 EXPOSE 16261:16261/udp 
 
+# Ports necessary for 5 players
 EXPOSE 16262:16262/tcp 
 EXPOSE 16263:16263/tcp 
 EXPOSE 16264:16264/tcp 
@@ -25,7 +27,7 @@ RUN echo steam steam/question select "I AGREE" | debconf-set-selections \
 ARG DEBIAN_FRONTEND=noninteractive
 RUN dpkg --add-architecture i386 \
   && apt-get update -y \
-  && apt-get install -y --no-install-recommends ca-certificates locales steamcmd \
+  && apt-get install -y --no-install-recommends ca-certificates locales steamcmd expect \
   && rm -rf /var/lib/apt/lists/*
 
 # Add unicode support
@@ -46,10 +48,16 @@ RUN mkdir /opt/pzserver &&\
 
 # Copy steam install script
 COPY ./fixtures/steam/update_zomboid.txt /opt/pzserver/update_zomboid.txt
+COPY . /zomboidBot
 
 # Install project zomboid server
 RUN steamcmd +runscript /opt/pzserver/update_zomboid.txt
 
+# Swap to pzuser
 USER pzuser
 
-ENTRYPOINT ["/opt/pzserver/start-server.sh"]
+# First time server run
+RUN source /zomboidBot/.env.dev && /zomboidBot/fixtures/scripts/first-time-server-start.sh $server_admin_password
+
+# Start server
+ENTRYPOINT /opt/pzserver/start-server.sh
