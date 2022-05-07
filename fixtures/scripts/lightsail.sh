@@ -6,7 +6,8 @@ sudo echo steam steam/question select "I AGREE" | sudo debconf-set-selections \
 export DEBIAN_FRONTEND="noninteractive"
 sudo dpkg --add-architecture i386 \
   && sudo apt-get update -y \
-  && sudo apt-get install -y --no-install-recommends ca-certificates locales steamcmd \
+  && sudo apt-get install -y --no-install-recommends ca-certificates \
+  locales steamcmd expect build-essential golang git \
   && sudo rm -rf /var/lib/apt/lists/*
 
 # Add unicode support
@@ -20,21 +21,27 @@ sudo ln -s /usr/games/steamcmd /usr/bin/steamcmd
 # Update SteamCMD and verify latest version
 sudo steamcmd +quit
 
-# Create project zomboid user and switch to it
+# Create project zomboid user
 sudo adduser pzuser
+sudo sudo usermod -a -G sudo pzuser
 sudo mkdir /opt/pzserver &&\
   sudo chown pzuser:pzuser /opt/pzserver
 
-# Copy steam install script
-# sudo cp ../fixtures/update_zomboid.txt /opt/pzserver/update_zomboid.txt
-
 # Install project zomboid server
-sudo steamcmd +runscript ../fixtures/update_zomboid.txt
+sudo steamcmd +runscript /zomboidBot/fixtures/steam/update_zomboid.txt
 
 # Create systemd service
-sudo cp ../fixtures/systemd/zomboidBot.service /etc/systemd/system/zomboidBot.service
+sudo cp /zomboidBot/fixtures/systemd/zomboidBot.service /etc/systemd/system/zomboidBot.service
 sudo systemctl daemon-reload
 
-# run the zomboid server
+# Build the bot
+cd /zomboidBot
+make build
+cd /
+
+# Run the zomboid server for the first time
 sudo su - pzuser
-/opt/server/start-server.sh
+source /zomboidBot/.env && /zomboidBot/fixtures/scripts/first-time-server-start.sh $server_admin_password
+
+# Run Bot daemon
+sudo systemctl start zomboidBot
