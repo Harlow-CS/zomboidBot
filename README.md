@@ -11,7 +11,7 @@ bot_oauth="bot-auth-here"
 guild_id="test-server-id"
 server_admin_password="idk-who-cares"
 server_channel_id="test-channel-id"
-serverName="servertest"
+server_name="servertest"
 zomboid_cli_path="/opt/pzserver"
 server_config_files_path="/home/pzuser/Zomboid/Server"
 whitelisted_read_settings="PVP,PublicName,SafetySystem,SpawnPoint,SpawnItems,Password,PingLimit"
@@ -38,6 +38,37 @@ You should now have the bot running. Note that since it isn't running in the doc
 
 ## Deploying
 
+### Manually Deploy
+
+Create a user for the bot to run with
+```
+sudo adduser pzuser
+```
+
+Then, clone this repo into the user's homedir (may need to install git)
+```
+cd /home/pzuser
+sudo git clone https://github.com/Harlow-CS/zomboidBot.git
+```
+
+Next, create a `.env` file in the root of the cloned repo, structured the same as the aforementioned `.env.dev`
+```
+cd /home/pzuser/zomboidBot
+sudo vim .env
+```
+
+Finally, navigate to the scripts folder of the repo and run the `lightsail.sh` script
+```
+cd /home/pzuser/zomboidBot/fixtures/scripts
+./lightsail.sh
+```
+
+The environment will then install all of the remaining necesarry tools and run the bot daemon.
+Your bot is now deployed!
+
+Ensure the listed ports from the Dockerfile's `EXPOSE` commands are portforwarded to have a connectable dedicated server.
+
+### Automagic Deploy
 TODO
 
 ## Configure Server Settings

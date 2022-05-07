@@ -17,11 +17,7 @@ var (
 	* Gets whether the server is active or not
 */
 func IsServerActive() bool {
-	if (Server == nil) {
-		return false
-	} else {
-		return true
-	}
+	return Server != nil
 }
 
 /*
@@ -30,10 +26,10 @@ func IsServerActive() bool {
 func StartServer() {
 	serverExecPath := filepath.Join(installationPath, "start-server.sh")
 	cmd := exec.Command(serverExecPath)
-	Server = cmd.Process
 	if err := cmd.Start(); err != nil {
 		log.Printf("Failed to start server:\n%s", err)
 	}
+	Server = cmd.Process
 }
 
 /*
