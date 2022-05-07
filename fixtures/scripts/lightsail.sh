@@ -23,7 +23,6 @@ sudo steamcmd +quit
 
 # Create project zomboid user
 sudo adduser pzuser
-sudo sudo usermod -a -G sudo pzuser
 sudo mkdir /opt/pzserver &&\
   sudo chown pzuser:pzuser /opt/pzserver
 
