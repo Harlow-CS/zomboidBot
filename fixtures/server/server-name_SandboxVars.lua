@@ -445,7 +445,7 @@ SandboxVars = {
     Map = {
         AllowMiniMap = false,
         AllowWorldMap = true,
-        MapAllKnown = false,
+        MapAllKnown = true,
     },
     ZombieLore = {
         -- Controls the zombie movement rate.
@@ -523,7 +523,7 @@ SandboxVars = {
         -- 2 = Night
         ActiveOnly = 1,
         -- Allows zombies to trigger house alarms when breaking through windows and doors.
-        TriggerHouseAlarm = false,
+        TriggerHouseAlarm = true,
         -- When enabled if multiple zombies are attacking they can drag you down to feed. Dependent on zombie strength.
         ZombiesDragDown = true,
         -- When enabled zombies will have a chance to lunge after climbing over a fence if you're too close.

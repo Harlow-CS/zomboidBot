@@ -95,7 +95,7 @@
     "Map": {
       "AllowMiniMap": false,
       "AllowWorldMap": true,
-      "MapAllKnown": false
+      "MapAllKnown": true
     },
     "ZombieLore": {
       "Speed": 2,
@@ -113,7 +113,7 @@
       "ThumpNoChasing": false,
       "ThumpOnConstruction": true,
       "ActiveOnly": 1,
-      "TriggerHouseAlarm": false,
+      "TriggerHouseAlarm": true,
       "ZombiesDragDown": true,
       "ZombiesFenceLunge": true
     },
