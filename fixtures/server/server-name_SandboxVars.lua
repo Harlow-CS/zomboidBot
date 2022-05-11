@@ -47,7 +47,7 @@ SandboxVars = {
     -- 9 = September
     -- 10 = October
     -- 11 = November
-    StartMonth = 7,
+    StartMonth = 3,
     StartDay = 9,
     -- 1 = 7 AM
     -- 2 = 9 AM
@@ -376,11 +376,11 @@ SandboxVars = {
     -- 2 = Very Low
     -- 3 = Low
     -- 4 = Normal
-    CarSpawnRate = 3,
+    CarSpawnRate = 4,
     -- Governs the chances of finding vehicles with gas in the tank.
     -- 1 = Low
     -- 2 = Normal
-    ChanceHasGas = 1,
+    ChanceHasGas = 2,
     -- Governs how full gas tanks will be in discovered cars.
     -- 1 = Very Low
     -- 2 = Low
@@ -410,7 +410,7 @@ SandboxVars = {
     -- 2 = Low
     -- 3 = Normal
     -- 4 = High
-    CarGeneralCondition = 2,
+    CarGeneralCondition = 3,
     -- Governs the amount of damage dealt to vehicles that crash.
     -- 1 = Very Low
     -- 2 = Low
@@ -431,7 +431,7 @@ SandboxVars = {
     -- 3 = Rare
     -- 4 = Sometimes
     -- 5 = Often
-    CarAlarm = 2,
+    CarAlarm = 3,
     -- Enable or disable player getting damage from being in a car accident.
     PlayerDamageFromCrash = true,
     -- How many in-game hours before a wailing siren shuts off. Minimum=0.00 Maximum=168.00 Default=0.00
@@ -439,7 +439,7 @@ SandboxVars = {
     --  Governs whether player can discover a car that has been maintained and cared for after the infection struck.
     -- 1 = Low
     -- 2 = Normal
-    RecentlySurvivorVehicles = 1,
+    RecentlySurvivorVehicles = 2,
     -- Enables vehicles to spawn.
     EnableVehicles = true,
     Map = {
@@ -539,7 +539,7 @@ SandboxVars = {
         -- The day when the population reaches it's peak. Minimum=1 Maximum=365 Default=28
         PopulationPeakDay = 28,
         -- The number of hours that must pass before zombies may respawn in a cell. If zero, spawning is disabled. Minimum=0.00 Maximum=8760.00 Default=72.00
-        RespawnHours = 72.0,
+        RespawnHours = 0.00,
         -- The number of hours that a chunk must be unseen before zombies may respawn in it. Minimum=0.00 Maximum=8760.00 Default=16.00
         RespawnUnseenHours = 16.0,
         -- The fraction of a cell's desired population that may respawn every RespawnHours. Minimum=0.00 Maximum=1.00 Default=0.10
